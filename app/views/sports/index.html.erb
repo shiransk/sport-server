@@ -1,0 +1,10 @@
+<div ng-app="app">
+  <div ng-controller="sports_ctrl" ng-init="setup()">
+    <div ng-repeat="sport in sports">
+      <li ng-click="flip()">{{sport.name}}</li>
+      <li ng-if="test">{{sport.age}}</li>
+      <li ng-if="test">{{sport.ball}}</li>
+      <li>---------------</li>
+    </div>
+  </div>
+</div>

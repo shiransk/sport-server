@@ -1,15 +1,39 @@
 <div ng-app="app">
   <div ng-controller="sports_ctrl" ng-init="setup()">
-    <div ng-repeat="sport in sports">
-      <li ng-click="flip(sport)">{{sport.name}}</li>
-      <li ng-if="sport.bioVis">{{sport.age}}</li>
-      <li ng-if="sport.bioVis">{{sport.ball}}</li>
-      <li>---------------</li>
+
+<shiran-directive> </shiran-directive>
+
+    Name - <div> <input ng-model="byName">  </div>
+    Age - <div> <input ng-model="byAge">  </div>
+
+
+<table>
+  <tr>
+    <th ng-click="toggleAttr('name')">Name</th>
+    <th ng-click="toggleAttr('age')">Age</th>
+    <th>Ball</th>
+  </tr>
+
+  <tr ng-repeat="sport in sports | filter: {name: byName, age: byAge} | orderBy:orderAttr:descending">
+    <td ng-click="flip(sport)"> {{sport.name}} </td>
+    <td > {{sport.age}} </td>
+    <td > {{sport.ball}} </td>
+  </tr>
+</table>
+
+    <div>
+      <datalist id="names">
+        <option ng-repeat="sport in sports">{{sport.name}}</option>
+        <option ng-repeat="sport in sports">{{sport.bio}}</option>           
+      </datalist>
+      Filter: <input ng-model="personFilter" list="names">    
     </div>
 
-    Sport<input ng-model="sport_name">
-    Age- <input ng-model="age">
-    Ball<input ng-model="ball">
+      <div ng-repeat="error in errors">{{error}}</div>
+
+      Sport<input ng-model="sport_name">
+      Age- <input ng-model="age">
+      Ball<input ng-model="ball">
 
     <button ng-click="addNewSport(sport_name, age, ball)">Submit </button>
   </div>

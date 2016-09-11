@@ -12,8 +12,11 @@ class Api::V1::SportsController < ApplicationController
 
   def create
     @sport = Sport.new(name: params[:name], ball: params[:ball], age: params[:age])
-    @sport.save
-    render json: @sport
+    if @sport.save
+      render json: @sport
+    else 
+      render json: {errors: @sport.errors.full_messages}, status: 422
+    end
   end
  
   def destroy
@@ -23,3 +26,4 @@ class Api::V1::SportsController < ApplicationController
   end
 
 end
+

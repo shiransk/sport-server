@@ -9,10 +9,9 @@
   }
 
 
-  $scope.flip = function (sport) {
+  $scope.flip = function(sport) {
     sport.bioVis = !sport.bioVis
   }
-
 
   $scope.addNewSport = function(sport_name, age, ball) {
     var sport = {
@@ -20,11 +19,25 @@
       age: age,
       ball: ball
     };
-    $scope.sports.push(sport);
-    $scope.name = null;
-    $scope.age = " ";
-    $scope.ball = " ";
+
+    $http.post("/api/v1/sports.json", sport).then(function(response) {
+      $scope.sports.push(response.data);     
+    }, function(error) {
+      $scope.errors = error.data.errors
+    }); 
   }
+
+  $scope.delete = function(sport) {
+    $http.delete("/api/v1/sports/" + sport.id).then(function(response) {
+      console.log(response.data)
+    })
+  }
+
+  
+
+  // $scope.toggleAttr = function(attr) {
+  //   if(attr == $scope.orderAttr)
+  // }
 
   window.$scope = $scope;
 
